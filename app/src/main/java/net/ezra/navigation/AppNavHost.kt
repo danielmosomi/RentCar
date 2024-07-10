@@ -1,5 +1,8 @@
 package net.ezra.navigation
 
+
+
+//import net.ezra.ui.auth.SignupScreen
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,20 +16,20 @@ import net.ezra.ui.about.AboutScreen
 import net.ezra.ui.auth.LoginScreen
 import net.ezra.ui.auth.SignUpScreen
 import net.ezra.ui.dashboard.DashboardScreen
-//import net.ezra.ui.auth.SignupScreen
 import net.ezra.ui.home.HomeScreen
 import net.ezra.ui.products.AddProductScreen
 import net.ezra.ui.products.ProductDetailScreen
 import net.ezra.ui.products.ProductListScreen
 import net.ezra.ui.students.AddStudents
-import net.ezra.ui.students.Search
+import net.ezra.ui.products.Search
 import net.ezra.ui.students.Students
+
 
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = ROUTE_HOME
+    startDestination: String = ROUTE_SPLASH
 
 
 ) {
@@ -35,7 +38,7 @@ fun AppNavHost(
     BackHandler {
         navController.popBackStack()
 
-        }
+    }
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -62,7 +65,7 @@ fun AppNavHost(
         }
 
         composable(ROUTE_VIEW_STUDENTS) {
-           Students(navController = navController, viewModel = viewModel() )
+            Students(navController = navController, viewModel = viewModel() )
         }
 
         composable(ROUTE_SEARCH) {
@@ -74,9 +77,9 @@ fun AppNavHost(
         }
 
         composable(ROUTE_REGISTER) {
-           SignUpScreen(navController = navController) {
+            SignUpScreen(navController = navController) {
 
-           }
+            }
         }
 
         composable(ROUTE_LOGIN) {
@@ -87,12 +90,10 @@ fun AppNavHost(
             AddProductScreen(navController = navController){}
         }
 
+
         composable(ROUTE_VIEW_PROD) {
-            ProductListScreen(navController = navController, products = listOf() )
+            ProductListScreen(navController = navController,  )
         }
-
-
-
         composable("productDetail/{productId}") { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId") ?: ""
             ProductDetailScreen(navController, productId)
@@ -136,7 +137,8 @@ fun AppNavHost(
 
 
 
-
-
     }
 }
+
+
+

@@ -1,4 +1,4 @@
-package net.ezra.ui.students
+package net.ezra.ui.products
 
 
 import android.annotation.SuppressLint
@@ -26,21 +26,15 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavController
-import net.ezra.R
-import net.ezra.navigation.ROUTE_HOME
 import net.ezra.navigation.ROUTE_SEARCH
+import net.ezra.navigation.ROUTE_VIEW_PROD
 
 
 data class YourDataClass(
@@ -48,10 +42,9 @@ data class YourDataClass(
     val id: String? = "",
 
     val imageUrl: String? = "",
-    val studentName: String? = "",
-    val studentClass: String? = "",
+    val productName: String? = "",
     val phone: String? = "",
-    val location: String? = ""
+
 
 )
 
@@ -67,9 +60,9 @@ fun Search(navController: NavHostController) {
     val firestore = Firebase.firestore
 
     DisposableEffect(searchText.text) {
-        val query = firestore.collection("Students")
-            .whereGreaterThanOrEqualTo("studentName", searchText.text)
-            .whereLessThanOrEqualTo("studentName", searchText.text + "\uf8ff")
+        val query = firestore.collection("products")
+            .whereGreaterThanOrEqualTo("productName", searchText.text)
+            .whereLessThanOrEqualTo("productName", searchText.text + "\uf8ff")
 
 
         val listener = query.addSnapshotListener { snapshot, error ->
@@ -96,7 +89,7 @@ fun Search(navController: NavHostController) {
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(ROUTE_HOME) {
+                        navController.navigate(ROUTE_VIEW_PROD) {
                             popUpTo(ROUTE_SEARCH) { inclusive = true }
                         }
                     }) {
@@ -166,15 +159,15 @@ fun Search(navController: NavHostController) {
                 loading = {
                     CircularProgressIndicator()
                 },
-                contentDescription = item.studentName,
+                contentDescription = item.productName,
                 modifier = Modifier
                     .clip(RoundedCornerShape(10))
                     .size(150.dp)
 
             )
 
-            item.studentName?.let { Text(text = it) }
-            item.phone?.let { Text(text = it) }
+            item.productName?.let { Text(text = it) }
+
 
 
 

@@ -1,3 +1,5 @@
+@file:Suppress("PreviewAnnotationInFunctionWithParameters")
+
 package net.ezra.ui.dashboard
 
 
@@ -33,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -54,6 +57,7 @@ import net.ezra.navigation.ROUTE_HOME
 private var progressDialog: ProgressDialog? = null
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Preview(showBackground = true)
 @Composable
 fun DashboardScreen(navController: NavHostController)  {
     var school by remember { mutableStateOf("") }
