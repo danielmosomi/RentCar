@@ -107,7 +107,7 @@ fun ProductDetailScreen(navController: NavController, productId: String) {
 
 suspend fun fetchProduct(productId: String): Product? {
     val db = FirebaseFirestore.getInstance()
-    val productsCollection = db.collection("cars")
+    val productsCollection = db.collection("products")
 
     return try {
         val documentSnapshot = productsCollection.document(productId).get().await()

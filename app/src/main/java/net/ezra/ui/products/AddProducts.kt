@@ -177,7 +177,7 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
                     OutlinedTextField(
                         value = ContactInformation,
                         onValueChange = { ContactInformation = it },
-                        label = { Text("Contact details") },
+                        label = { Text("Contact details and location") },
                         isError = ContactInformationError,
                         modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.outlinedTextFieldColors(

@@ -20,13 +20,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -75,29 +72,13 @@ fun ProductListScreen(navController: NavController) {
     var productList by remember { mutableStateOf(emptyList<Product>()) }
     var displayedProductCount by remember { mutableStateOf(1) }
     var progress by remember { mutableStateOf(0) }
+    var searchQuery by remember{ mutableStateOf("")}
 
     LaunchedEffect(Unit) {
         fetchProducts { fetchedProducts ->
             productList = fetchedProducts
             isLoading = false
         }
-    }
-    @Composable
-    fun SearchBar(
-        query: String,
-        onQueryChanged: (String) -> Unit,
-        modifier: Modifier = Modifier
-    ) {
-        TextField(
-            value = query,
-            onValueChange = onQueryChanged,
-            placeholder = { Text("Search Products") },
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .background(Color.White),
-            singleLine = true
-        )
     }
 
     Scaffold(
@@ -132,6 +113,7 @@ fun ProductListScreen(navController: NavController) {
                     .fillMaxSize()
                     .background(Color(0xffFEFCFF))
             ) {
+
                 if (isLoading) {
                     // Progress indicator
                     Box(
@@ -148,7 +130,7 @@ fun ProductListScreen(navController: NavController) {
                     } else {
                         // Products list
                         LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-                            items(productList.take(displayedProductCount)) { product ->
+                            items(productList) { product ->
                                 ProductListItem(product) {
                                     navController.navigate("productDetail/${product.id}")
                                 }
@@ -156,18 +138,9 @@ fun ProductListScreen(navController: NavController) {
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         // Load More Button
-                        if (displayedProductCount < productList.size) {
-                            Button(
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xff070E0D)),
-                                onClick = { displayedProductCount += 1 },
-                                modifier = Modifier.align(Alignment.CenterHorizontally)
-                            ) {
-                                Text(text = "Load More")
-                            }
                         }
                     }
                 }
-            }
         }
     )
 }
